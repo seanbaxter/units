@@ -200,10 +200,22 @@ struct unit_t {
   }
 
   template<Arithmetic type2_t>
+  constexpr unit_t& operator+=(const unit_t<type2_t, powers...>& rhs) {
+    data += rhs.data;
+    return *this;
+  }
+
+  template<Arithmetic type2_t>
   constexpr auto operator-(const unit_t<type2_t, powers...>& rhs) const ->
     unit_t<decltype(std::declval<type_t>() - rhs.data), powers...> {
 
     return { data - rhs.data };
+  }
+
+  template<Arithmetic type2_t>
+  constexpr unit_t& operator-=(const unit_t<type2_t, powers...>& rhs) {
+    data -= rhs.data;
+    return *this;
   }
 
   template<typename type2_t, int... powers2>
